@@ -356,18 +356,18 @@ For more information see http://www.cartotype.com.
             <label case='assume-title' color='darkslategrey' duplicate='10000m,1024pt' font-size='130m,5pt,16pt' glow='white' glowWidth='7%,0.5pt' position='point' priority='0' wrapWidth='10em'/>
             <condition exp='OsmType=="cit"'>
                 <scale max='3000000'>
-                    <label color='dimgrey' font-size='200m,7pt,24pt' font-weight='bold' priority='-5'/>
+                    <label color='dimgrey' font-size='200m,7pt,24pt' font-weight='bold' priority='-6'/>
                 </scale>
                 <scale min='3000000'>
-                    <label color='dimgrey' font-size='200m,7pt,24pt' priority='-5'/>
+                    <label color='dimgrey' font-size='200m,7pt,24pt' priority='-6'/>
                 </scale>
                 <condition exp='capital=="yes"'>
-                    <label font-size='200m,7pt,24pt' priority='-6'/>
+                    <label font-size='200m,7pt,24pt' priority='-7'/>
                 </condition>
             </condition>
             <scale max='1500000'>
                 <condition exp='OsmType=="tow"'>
-                    <label font-size='200m,7pt,24pt' priority='-3'/>
+                    <label font-size='200m,7pt,24pt' priority='-5'/>
                 </condition>
             </scale>
             <condition exp='OsmType=="isl"'>
