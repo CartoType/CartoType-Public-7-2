@@ -104,18 +104,22 @@ void CStyleItem::SetAttribute(const char* aKey,const std::string& aValue)
         m_attributes[aKey] = aValue;
     }
 
-void CStyleItem::AppendXmlContext(std::string& aDest,const CStyleItem* aChildNode,bool aAllowEverything)
+void CStyleItem::AppendXmlContext(std::string& aPrecedingContext,std::string& aFollowingContext,
+                                  const CStyleItem* aChildNode,bool aAllowEverything)
     {
+    std::string* dest = &aPrecedingContext;
     for (const auto p : m_child_list)
         {
-        if (p != aChildNode)
+        if (p == aChildNode)
+            dest = &aFollowingContext;
+        else
             {
             if (aAllowEverything ||
                 p->m_element_name == "line" ||
                 p->m_element_name == "shape" ||
                 p->m_element_name == "icon" ||
                 p->m_element_name == "label")
-                aDest += p->Xml();
+                *dest += p->Xml();
             }
         }
     }
@@ -290,9 +294,11 @@ void CStyleItem::CreateImage()
     Determine the map object type if it's not yet known.
     */
     std::string temp_layer("<layer name='_temp'>");
-    std::string context;
-    for (int i = 1; i < parent_array.size(); i++)
-        parent_array[i - 1]->AppendXmlContext(context,parent_array[i],i == parent_array.size() - 1);
+    std::string preceding_context;
+    std::string following_context;
+    for (size_t i = 1; i < parent_array.size(); i++)
+        parent_array[i - 1]->AppendXmlContext(preceding_context,following_context,
+                                              parent_array[i],i == parent_array.size() - 1);
 
     // Experiment: if this is an icon, change its size to something discernible.
     std::string saved_width_attrib;
@@ -307,8 +313,9 @@ void CStyleItem::CreateImage()
     if (m_element_name == "icon")
         SetAttribute("width",saved_width_attrib);
 
-    temp_layer += context;
+    temp_layer += preceding_context;
     temp_layer += element;
+    temp_layer += following_context;
     temp_layer += "</layer>";
 
     /*

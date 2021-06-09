@@ -34,7 +34,7 @@ class CStyleItem
 
     private:
     void AppendChild(CStyleItem* aChild);
-    void AppendXmlContext(std::string& aDest,const CStyleItem* aChildNode,bool aAllowEverything);
+    void AppendXmlContext(std::string& aPrecedingContext,std::string& aFollowingContext,const CStyleItem* aChildNode,bool aAllowEverything);
     std::string XmlHelper(bool aIndent,int aIndentLevel);
 
     QWidget& m_widget; // the widget owning the tree model: provides a font used to measure the caption size
